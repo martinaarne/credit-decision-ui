@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import CreditDecisionForm from './CreditDecisionForm';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    
+    <CreditDecisionForm />
   </React.StrictMode>,
   document.getElementById('root')
 );

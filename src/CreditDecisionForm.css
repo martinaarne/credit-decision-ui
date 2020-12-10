@@ -1,0 +1,134 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.app {
+  width: 1000px;
+  margin: 0 auto; 
+}
+
+.form {
+  display: grid;
+  grid-row-gap: 5px;
+}
+
+.ssn-shortcuts {
+  overflow: hidden;
+  float:right;
+}
+
+.ssn-shortcut {
+  cursor: pointer
+}
+
+@media (min-width: 29.375rem) {
+  .form {
+    grid-column-gap: 25px;
+    grid-template-areas: 
+      "label-ssn  field-ssn"
+      "label-amount field-amount"
+      "label-period   field-period"
+      ".                   button"
+      ". congrats"
+      ". maybe"
+  }
+}
+
+@media (min-width: 29.375rem) {
+  .label-ssn {
+    grid-area: label-ssn;
+  }
+  .label-amount {
+    grid-area: label-amount;
+  }
+  .label-period {
+    grid-area: label-period;
+  }
+  .field-ssn {
+    grid-area: field-ssn;
+  }
+  .field-amount {
+    grid-area: field-amount;
+  }
+  .field-period {
+    grid-area: field-period;
+  }
+  .button {
+    grid-area: button;
+  }
+}
+
+.form {
+  background-color: #eee;
+  font-family: Helvetica, Arial, sans-serif;
+  max-width: 600px;
+  padding: 25px;
+}
+
+.field {
+  border: 1px solid #ccc;
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 10px;
+}
+
+@media (max-width: 29.3125rem) {
+  .label-ssn {
+    margin-top: 20px;
+  }
+}
+
+.button {
+  appearance: none;
+  background-color: orange;
+  border: none;
+  font-size: .9375rem;
+  margin-top: 20px;
+  padding: 10px;
+  /* justify-self: start; */
+  float: right;
+  cursor: pointer;
+}
+
+.congrats {
+  color: green;
+}
+
+.maybe {
+  color: orange;
+}
