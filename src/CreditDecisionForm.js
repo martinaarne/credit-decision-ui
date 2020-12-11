@@ -1,6 +1,7 @@
 import './CreditDecisionForm.css';
 import React from 'react';
 import CreditDecisionResults from './CreditDecisionResults';
+import ApiService from './ApiService';
 
 export default class CreditDecisionForm extends React.Component {
   constructor(props){
@@ -24,7 +25,16 @@ export default class CreditDecisionForm extends React.Component {
     if(!isValid){
       return;
     }
-    this.requestLoan(this.state.ssn, this.state.amount, this.state.period)
+    ApiService.getInstance().requestLoan(this.state.ssn, this.state.amount, this.state.period).then(data => 
+      this.setState({
+        decisionForRequestedPeriod: data.creditDecisionForRequestedPeriod,
+        decisionWithMinPeriod: data.approvedCreditDecisionWithMinPeriod,
+        validationMessages: data.validationMessages,
+        isLoaded: true
+      })).catch(error => this.setState({
+        error: error,
+        isLoaded: true
+    }));
   }
 
   validate(){
@@ -39,41 +49,6 @@ export default class CreditDecisionForm extends React.Component {
     }
     return isValid;
   }
-
-
-  requestLoan(ssn, amount, period) {
-    this.setState({isLoaded: false })
-    const apiEndPoint = 'http://localhost:8080';
-    const requestBody = { 
-        "ssn": ssn,
-        "creditAmount": amount,
-        "periodInMonths": period
-    }
-
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(requestBody)
-    };
-    fetch(apiEndPoint + '/credit-decision', requestOptions)
-        .then(resp => resp.json())
-        .then(data => {
-            this.setState({
-              decisionForRequestedPeriod: data.creditDecisionForRequestedPeriod,
-              decisionWithMinPeriod: data.approvedCreditDecisionWithMinPeriod,
-              validationMessages: data.validationMessages,
-              isLoaded: true
-            }); 
-        })
-        .catch(error => {
-          console.log(error);
-          this.setState({
-            error: error,
-            isLoaded: true
-          })
-      });
-  }
-
 
   updateSsn(e) {
     this.setSsn(e.target.value)
