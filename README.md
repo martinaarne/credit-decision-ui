@@ -1,8 +1,17 @@
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-Requirements for running this is NodeJs and npm.
+Requirements for running this is Node >= 8.10 and npm >= 5.6.
 This project assumes that the credit-decision-api is hosted on http://localhost:8080/credit-decision
+
+
+## Usage Guide
+
+- Ensure that credit-decision-api is running on http://localhost:8080/credit-decision
+- run `npm -i`
+- run `npm start`
+- Voila, you are good to go
+
 
 ## Available Scripts
 

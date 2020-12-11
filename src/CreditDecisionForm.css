@@ -66,6 +66,7 @@
       ".                   button"
       ". congrats"
       ". maybe"
+      ". error"
   }
 }
 
@@ -131,4 +132,8 @@
 
 .maybe {
   color: orange;
+}
+
+.sorry {
+  color: red;
 }

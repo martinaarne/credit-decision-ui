@@ -1,5 +1,6 @@
 import './CreditDecisionForm.css';
 import React from 'react';
+import CreditDecisionResults from './CreditDecisionResults';
 
 export default class CreditDecisionForm extends React.Component {
   constructor(props){
@@ -28,10 +29,10 @@ export default class CreditDecisionForm extends React.Component {
 
   validate(){
     let isValid = true;
-    // if(!this.state.ssn) {
-    //   isValid = false;
-    //   alert("Social Security Number cannot be empty!");
-    // }
+    if(!this.state.ssn) {
+      isValid = false;
+      alert("Social Security Number cannot be empty!");
+    }
     if(this.state.amount < 2000) {
       isValid = false;
       alert("Minimum request amount is 2000€!")
@@ -60,16 +61,17 @@ export default class CreditDecisionForm extends React.Component {
             this.setState({
               decisionForRequestedPeriod: data.creditDecisionForRequestedPeriod,
               decisionWithMinPeriod: data.approvedCreditDecisionWithMinPeriod,
-              validationMessages: data.validationMessages
+              validationMessages: data.validationMessages,
+              isLoaded: true
             }); 
         })
         .catch(error => {
           console.log(error);
           this.setState({
-            error: error
+            error: error,
+            isLoaded: true
           })
-      });;
-    this.setState({isLoaded: true });
+      });
   }
 
 
@@ -79,19 +81,22 @@ export default class CreditDecisionForm extends React.Component {
 
   setSsn(ssn) {
     this.setState({
-      ssn: ssn
+      ssn: ssn,
+      isLoaded: false
     });
   }
 
   updateAmount(e) {
     this.setState({
-      amount: parseInt(e.target.value)
+      amount: parseInt(e.target.value),
+      isLoaded: false
     });
   }
 
   updatePeriod(e) {
     this.setState({
-      period: parseInt(e.target.value)
+      period: parseInt(e.target.value),
+      isLoaded: false
     });
   }
 
@@ -123,6 +128,7 @@ export default class CreditDecisionForm extends React.Component {
 
     const requestedDecision = this.state.decisionForRequestedPeriod;
     const approvedDecisionMinPeriod = this.state.decisionWithMinPeriod;
+    const validationMessages = this.state.validationMessages;
     const error = this.state.error;
 
     return (
@@ -172,13 +178,16 @@ export default class CreditDecisionForm extends React.Component {
           <br/>
 
           <input type="submit" className="button" value="Apply now!" onClick={this.submitApplication}  />
-
-          {this.state.isLoaded && requestedDecision && <p className="congrats">Congratulations! Your request would be approved. If you wish, you could even lend as much as {requestedDecision.amount}€ with a period of {requestedDecision.periodInMonths} months!</p>}
-          {this.state.isLoaded && approvedDecisionMinPeriod && <p className="maybe">Your loan request of {this.state.amount}€ for {this.state.period} months was not approved, but you do apply for a loan of {approvedDecisionMinPeriod.amount}€ with period {approvedDecisionMinPeriod.periodInMonths} months </p>}
-          {this.state.isLoaded && error && <p className="error">There was an error processing your request. Error details: {error}</p>}
-          {this.state.isLoaded && this.state.validationMessages && this.state.validationMessages.length && <p className="error">There were some issues validating your request. Details: {this.state.validationMessages.join(' ')}</p>}
-
         </div>
+        
+        <CreditDecisionResults 
+            isLoaded={this.state.isLoaded} 
+            requestedPeriod={this.state.period}
+            requestedAmount={this.state.amount}
+            requestedDecision={requestedDecision}
+            approvedDecisionMinPeriod={approvedDecisionMinPeriod}
+            error={error}
+            validationMessages={validationMessages} />
 
       </div>
     );
